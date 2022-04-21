@@ -1,3 +1,5 @@
+from importlib.metadata import SelectableGroups
+from re import X
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -85,8 +87,10 @@ def heun():
             Y[n+1] = y
     return (X, Y)
 
-def solucionExacta():
-    pass
+def solucionExacta(x):
+    return (1/((y0**(-c)) - c*k*x))**(1/c)
+
+        
 
 """
 plt.plot(x,y1,label='k=-1.0',color='red')
@@ -98,6 +102,9 @@ plt.legend()
 plt.show()
 """
 
+xp = np.arange(0.0, 1.0, 0.01)
+
+plt.plot(xp, solucionExacta(xp), label='solución exacta', color='pink')
 plt.plot(modificado()[0], modificado()[1], label='modificado', color='red')
 plt.plot(heun()[0], heun()[1], label='heun', color='green')
 plt.plot(progresivo()[0], progresivo()[1], label='progresivo', color='blue')
