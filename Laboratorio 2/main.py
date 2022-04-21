@@ -85,6 +85,9 @@ def heun():
             Y[n+1] = y
     return (X, Y)
 
+def solucionExacta():
+    pass
+
 """
 plt.plot(x,y1,label='k=-1.0',color='red')
 plt.plot(x,y2,label='k=0.3',color='green')
