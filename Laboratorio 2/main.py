@@ -27,13 +27,13 @@ def progresivo():
         
         if n==0:
             y = y0 + h*f(y0, x0, k, c)
-            x = x0 + h*n
+            x = x0 + h
             X[n+1] = x
             Y[n+1] = y
 
         else:
             y = y + h*f(y, x, k, c)
-            x = x + h*n
+            x = x + h
             X[n+1] = x
             Y[n+1] = y
     return (X, Y)
@@ -51,7 +51,7 @@ def modificado():
             xT = x0 + h/2
             yT = y0 + (h/2)*f(y0, x0, k, c)
             y = y0 + h* f(yT, xT, k, c)
-            x = x0 + h*n
+            x = x0 + h
             X[n+1] = x
             Y[n+1] = y
 
@@ -59,7 +59,7 @@ def modificado():
             xT = x + h/2
             yT = y + (h/2)*f(y, x, k, c)
             y = y + h * f(yT, xT, k, c)
-            x = x + h*n
+            x = x + h
             X[n+1] = x
             Y[n+1] = y
     return (X, Y)
@@ -76,13 +76,13 @@ def heun():
         
         if n==0:
             yT = y0 + h*f(x0, y0, k, c)
-            x = x0 + h*n
+            x = x0 + h
             y = y0 + (h/2) * (f(y0, x0, k, c) + f(yT, x0, k, c))
             X[n+1] = x
             Y[n+1] = y
         else:
             yT = y + h*f(x, y, k, c)
-            x = x + h*n
+            x = x + h
             y = y + (h/2) * (f(y, x, k, c) + f(yT, x, k, c))
             X[n+1] = x
             Y[n+1] = y
@@ -99,7 +99,7 @@ plt.show()
 """
 
 xp = np.arange(0.0, 1.0, 0.01)
-yp = odeint(f, y0, xp, k, c)
+yp = odeint(f, y0, xp, (k, c))
 
 plt.plot(xp, yp, label='solución exacta', color='pink')
 plt.plot(modificado()[0], modificado()[1], label='modificado', color='red')
