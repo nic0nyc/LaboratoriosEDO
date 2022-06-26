@@ -3,48 +3,9 @@ from sympy import *
 x = Symbol('x')
 s = Symbol('s')
 
-a = Symbol('a')
-
-"""
-
-Pregunta 1
-
-"""
-
-#Mi método a través de la definición
-def TLaplace(func):
-    return integrate(exp(-s*x) * func, (x, 0, oo), conds='none')
-
-#Lista de las funciones
-functionsList = [sin((5*x)/2), cos((5*x)/3), x**13, (x**2)*sin(2*x), exp(-3*x), exp(3*x)*sin(2*x)]
-
-#Comparación e impresión de los resultados
-for func in functionsList:
-    
-    print(f"La función es: {func}")
-    print(f"Solución a través de mi método: {TLaplace(func)}")
-    print(f"Solución con el método de python: {laplace_transform(func, x , s, noconds=True)}")
-    
-    # https://docs.sympy.org/dev/tutorial/gotchas.html#equals-signs
-    if((simplify(TLaplace(func) - laplace_transform(func, x , s, noconds=True))) == 0):
-        print("Las transformadas son iguales")
-
-    print()
-
-"""
-
-Pregunta 2
-
-"""
 
 #Función del solver
 def solver(n, listaCoeficientes, funcion, listaCondiciones):
-
-    try:
-        func = sympify(funcion)
-    except:
-        print("La función no se pudo transformar")
-        return
 
     if(n != 2 and n != 3):
         print("El solver solo funciona para n=2 y n=3")
@@ -59,11 +20,12 @@ def solver(n, listaCoeficientes, funcion, listaCondiciones):
 
         print("No hay suficientes condiciones")
         return
-    
+
+    func = sympify(funcion)
     func = laplace_transform(func, x, s, noconds=True)
 
-    if(n == 2):
 
+    if(n == 2):
 
         #Resultado calculado a mano
         Ys = (func + listaCondiciones[0] * s * listaCoeficientes[2] + listaCondiciones[1] * listaCoeficientes[2] + listaCondiciones[0] * listaCoeficientes[1])/((s**2) * listaCoeficientes[2] + s * listaCoeficientes[1] + listaCoeficientes[0])
@@ -71,6 +33,8 @@ def solver(n, listaCoeficientes, funcion, listaCondiciones):
         yx = inverse_laplace_transform(Ys, s, x)
 
         print("Solucion Ejemplo 1 (n=2): ", yx)
+
+    
     if(n == 3):
 
         #Resultado calculado a mano
@@ -80,8 +44,11 @@ def solver(n, listaCoeficientes, funcion, listaCondiciones):
 
         print("Solucion Ejemplo 2 (n=3): ", yx)
 
+
+
 #Probando con los ejemplos
 
+#Ejemplo 1:
 n = 2
 a2 = 1
 a1 = 3
@@ -95,6 +62,8 @@ y1 = 1
 solver(n, [a0,a1,a2], fx, [y0,y1])
 
 print()
+
+#Ejemplo 2:
 
 n = 3
 a3 = 1
